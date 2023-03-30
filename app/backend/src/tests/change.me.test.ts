@@ -8,16 +8,21 @@ import Example from '../database/models/ExampleModel';
 
 import { Response } from 'superagent';
 
+import Teams from '../database/models/Teams';
+import teamsMock from './mocks/teamsMock.json'
+import teamsServices from '../services/teams.services';
+
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
+describe('Testa o backend da aplicação', () => {
   /**
    * Exemplo do uso de stubs com tipos
    */
 
   // let chaiHttpResponse: Response;
+  afterEach(sinon.restore);
 
   // before(async () => {
   //   sinon
@@ -39,7 +44,9 @@ describe('Seu teste', () => {
   //   expect(...)
   // });
 
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+  it('A rota /teams deve retornar os times corretamente', async () => {
+    sinon.stub(Teams, "findAll" ).resolves(teamsMock);
+    const result = await teamsServices.getAllTeams();
+    expect(result).to.be.deep.equal(teamsMock);
   });
 });
