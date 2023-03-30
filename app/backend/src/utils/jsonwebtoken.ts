@@ -26,7 +26,7 @@ class JsonWebToken {
       return decriptedData;
     } catch (error) {
       throw Object.assign(
-        new Error('Expired or invalid token'),
+        new Error('Token must be a valid token'),
         { status: 401 },
       );
     }

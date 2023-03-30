@@ -8,9 +8,17 @@ class LoginController {
     try {
       const loginInfo = req.body;
       const result = await this.loginServices.loginUser(loginInfo);
-      res.status(200).send(result);
+      res.status(200).json({ token: result });
     } catch (error:any) {
-      res.status(404).json({ message: error.message });
+      res.status(error.status).json({ message: error.message });
+    }
+  };
+
+  public returnUserRole = async (req: Request, res: Response) => {
+    const token = req.headers.authorization;
+    if (token) {
+      const userToken = await this.loginServices.returnUserRole(token);
+      res.status(200).json({ role: userToken });
     }
   };
 }
