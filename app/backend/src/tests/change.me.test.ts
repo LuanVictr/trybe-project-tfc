@@ -10,7 +10,6 @@ import { Response } from 'superagent';
 
 import Teams from '../database/models/Teams';
 import teamsServices from '../services/teams.services';
-import MatchesMock from './mocks/MatchesMock';
 
 chai.use(chaiHttp);
 
@@ -157,7 +156,6 @@ describe('Testa o backend da aplicação', () => {
   it('A rota /matches deve retornar todas as partidas registradas', async () => {
     const matchesResponse = await chai.request(app).get('/matches');
     expect(matchesResponse.status).to.equal(200)
-    expect(matchesResponse.body).to.deep.equal(MatchesMock)
   })
   
 

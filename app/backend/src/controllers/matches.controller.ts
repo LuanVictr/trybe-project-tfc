@@ -5,8 +5,19 @@ class MatchServices {
   constructor(private matchesServices = new MatchesServices()) {}
 
   public getAllMatches = async (req: Request, res: Response) => {
-    const matches = await this.matchesServices.getAllMatches();
-    res.status(200).send(matches);
+    const { inProgress } = req.query;
+    if (!inProgress) {
+      const matches = await this.matchesServices.getAllMatches();
+      return res.status(200).json(matches);
+    }
+    const matches = await this.matchesServices.getInProgressMatches(inProgress === 'true');
+    return res.status(200).json(matches);
+  };
+
+  public finishMatch = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await this.matchesServices.finishMatch(parseInt(id, 10));
+    res.status(200).json({ message: result });
   };
 }
 
