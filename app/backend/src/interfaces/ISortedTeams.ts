@@ -1,5 +1,5 @@
 interface ISortedTeams {
-  name:string;
+  name:string | undefined;
   totalPoints:number;
   totalGames:number;
   totalVictories:number;

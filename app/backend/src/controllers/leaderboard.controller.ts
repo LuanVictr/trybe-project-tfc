@@ -12,6 +12,15 @@ class LeaderboardController {
       res.status(404).json({ message: error.message });
     }
   };
+
+  public createLeaderBoardAway = async (req: Request, res: Response) => {
+    try {
+      const result = await this.leaderboardServices.createLeaderBoardAway();
+      res.status(200).send(result);
+    } catch (error:any) {
+      res.status(404).json({ message: error.message });
+    }
+  };
 }
 
 export default LeaderboardController;
