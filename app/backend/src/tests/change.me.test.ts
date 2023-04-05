@@ -156,7 +156,33 @@ describe('Testa o backend da aplicação', () => {
   it('A rota /matches deve retornar todas as partidas registradas', async () => {
     const matchesResponse = await chai.request(app).get('/matches');
     expect(matchesResponse.status).to.equal(200)
+    expect(matchesResponse.body.length).to.equal(48)
   })
+
+  it('A rota /matches?inProgress=true deve retornar somente partidas em andamento', async () => {
+    const matchesResponse = await chai.request(app).get('/matches?inProgress=true');
+    expect(matchesResponse.status).to.equal(200);
+    expect(matchesResponse.body.length).to.equal(8);
+  })
+
+  it('A rota /matches?inProgress=false deve retornar apenas as partidas ja finalizadas', async () => {
+    const matchesResponse = await chai.request(app).get('/matches?inProgress=false');
+    expect(matchesResponse.status).to.equal(200);
+    expect(matchesResponse.body.length).to.equal(40);
+  });
+
+ /*  it('A rota /matches/:id/finish deve finalizar a partida' ,async () => {
+    const matchesResponse = await chai.request(app).patch('/matches/4/finish');
+    expect(matchesResponse.status).to.equal(200);
+    expect(matchesResponse.body).to.deep.equal({ "message": "Finished" });
+
+  });
+
+  it('A rota /matches/id deve ser possivel atualizar uma partida em andamento', async () => {
+    const matchesResponse = await chai.request(app).patch('/matches/4').send({"homeTeamGoals": 3,"awayTeamGoals": 1});
+    expect(matchesResponse.status).to.equal(200);
+    expect(matchesResponse.body).to.deep.equal({message: 'Updated'});
+  }); */
   
 
 
